@@ -1,13 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-export const SeatMapExtension = {
+const SeatMapExtension = {
   name: 'SeatMap',
   type: 'response',
-  match: ({ trace }) =>
-    trace.type === 'ext_seatMap' || trace.payload.name === 'ext_seatMap',
+  match: ({ trace }) => trace.type === 'ext_seatMap',
   render: ({ trace, element }) => {
-    const seatMapData = JSON.parse(trace.payload.seatMap);
+    const seatMapData = trace.payload.seatMap;
 
     const SeatMapComponent = () => {
       const [selectedSeat, setSelectedSeat] = React.useState(null);
@@ -41,7 +37,7 @@ export const SeatMapExtension = {
                       } ${selectedSeat === seat.number ? 'selected' : ''}`}
                       onClick={() => seat.available && handleSeatClick(seat.number)}
                       disabled={!seat.available}
-                      title={`Seat ${seat.number} - ${seat.price > 0 ? `$${seat.price}` : 'Free'}`}
+                      title={`Seat ${seat.number} - $${seat.price}`}
                     >
                       {seat.number}
                     </button>
@@ -61,8 +57,6 @@ export const SeatMapExtension = {
       );
     };
 
-    const root = document.createElement('div');
-    element.appendChild(root);
-    ReactDOM.createRoot(root).render(<SeatMapComponent />);
+    ReactDOM.render(React.createElement(SeatMapComponent), element);
   },
 };
