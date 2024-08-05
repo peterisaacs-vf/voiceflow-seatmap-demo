@@ -17,6 +17,8 @@
                 console.log('Voiceflow script loaded');
                 if (typeof SeatMapExtension === 'undefined') {
                     console.error('SeatMapExtension is not defined. Check if extensions.js is loaded correctly.');
+                } else {
+                    console.log('SeatMapExtension is defined:', SeatMapExtension);
                 }
                 window.voiceflow.chat.load({
                     verify: { projectID: '66860dd4ea6b445ad4b30530' },
