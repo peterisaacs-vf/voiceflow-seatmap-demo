@@ -32,6 +32,7 @@
     <script src="https://cdn.jsdelivr.net/npm/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
     <script src="./extensions.js"></script>
     <script>
+        console.log('Page loaded, initializing Voiceflow chat');
         (function(d, t) {
             var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
             v.onload = function() {
@@ -46,7 +47,12 @@
                     url: 'https://general-runtime.voiceflow.com',
                     versionID: 'development',
                     user: { name: 'Demo User' },
-                    assistant: { extensions: [SeatMapExtension] }
+                    assistant: { 
+                        extensions: [SeatMapExtension],
+                        runtime: {
+                            trace: true,  // Enable tracing
+                        },
+                    }
                 }).then(() => {
                     console.log('Voiceflow chat loaded successfully');
                 }).catch(error => {
