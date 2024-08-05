@@ -4,19 +4,26 @@ const SeatMapExtension = {
   name: 'SeatMap',
   type: 'response',
   match: ({ trace }) => {
-    console.log('Checking trace:', trace);
+    console.log('SeatMapExtension: Checking trace:', trace);
     return trace.type === 'ext_seatMap';
   },
   render: ({ trace, element }) => {
-    console.log('Rendering seat map with data:', trace.payload);
+    console.log('SeatMapExtension: Rendering seat map with data:', trace.payload);
     try {
       const seatMapData = trace.payload.seatMap;
+      console.log('SeatMapExtension: Parsed seatMapData:', seatMapData);
+
       const SeatMapComponent = () => {
+        console.log('SeatMapExtension: Rendering SeatMapComponent');
         const [selectedSeat, setSelectedSeat] = React.useState(null);
+        
         const handleSeatClick = (seatNumber) => {
+          console.log('SeatMapExtension: Seat clicked:', seatNumber);
           setSelectedSeat(seatNumber);
         };
+
         const handleConfirm = () => {
+          console.log('SeatMapExtension: Confirming seat:', selectedSeat);
           if (selectedSeat) {
             window.voiceflow.chat.interact({
               type: 'complete',
@@ -24,6 +31,7 @@ const SeatMapExtension = {
             });
           }
         };
+
         return (
           <div className="seat-map">
             <h3>Select a seat for flight {seatMapData.flightNumber}</h3>
@@ -59,12 +67,15 @@ const SeatMapExtension = {
           </div>
         );
       };
+
+      console.log('SeatMapExtension: Creating or updating React root');
       if (!root) {
         root = ReactDOM.createRoot(element);
       }
       root.render(React.createElement(SeatMapComponent));
+      console.log('SeatMapExtension: Render complete');
     } catch (error) {
-      console.error('Error rendering seat map:', error);
+      console.error('SeatMapExtension: Error rendering seat map:', error);
       element.textContent = 'Error rendering seat map. Please try again.';
     }
   },
