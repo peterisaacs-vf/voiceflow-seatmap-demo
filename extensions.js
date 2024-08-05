@@ -1,3 +1,5 @@
+let root = null;
+
 const SeatMapExtension = {
   name: 'SeatMap',
   type: 'response',
@@ -57,7 +59,9 @@ const SeatMapExtension = {
           </div>
         );
       };
-      const root = ReactDOM.createRoot(element);
+      if (!root) {
+        root = ReactDOM.createRoot(element);
+      }
       root.render(React.createElement(SeatMapComponent));
     } catch (error) {
       console.error('Error rendering seat map:', error);
