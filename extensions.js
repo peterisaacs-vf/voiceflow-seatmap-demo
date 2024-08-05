@@ -57,7 +57,8 @@ const SeatMapExtension = {
           </div>
         );
       };
-      ReactDOM.render(React.createElement(SeatMapComponent), element);
+      const root = ReactDOM.createRoot(element);
+      root.render(React.createElement(SeatMapComponent));
     } catch (error) {
       console.error('Error rendering seat map:', error);
       element.textContent = 'Error rendering seat map. Please try again.';
