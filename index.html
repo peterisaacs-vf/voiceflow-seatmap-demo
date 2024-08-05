@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat Widget | Extensions Demo</title>
+    <style>
+      .seat-map {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .seat-class {
+        margin-bottom: 20px;
+      }
+      .seat-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+      }
+      .seat {
+        width: 40px;
+        height: 40px;
+        margin: 0 5px;
+        border: 1px solid #ccc;
+        background-color: #f0f0f0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .seat.available:hover {
+        background-color: #e0e0e0;
+      }
+      .seat.unavailable {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+      .seat.selected {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .confirm-button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .confirm-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="voiceflow-chat"></div>
+    <script src="https://cdn.jsdelivr.net/npm/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script type="module">
+      import { SeatMapExtension } from './extensions.js';
+      
+      (function (d, t) {
+        var v = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        v.onload = function () {
+          window.voiceflow.chat.load({
+            verify: { projectID: '66860dd4ea6b445ad4b30530' },
+            url: 'https://general-runtime.voiceflow.com',
+            versionID: 'development',
+            user: {
+              name: 'Demo User',
+            },
+            render: {
+              mode: 'overlay',
+            },
+            autostart: false,
+            allowDangerousHTML: true,
+            assistant: {
+              extensions: [
+                SeatMapExtension,
+                // Add other extensions here if needed
+              ],
+            },
+          });
+        };
+        v.src = 'https://cdn.voiceflow.com/widget/bundle.mjs';
+        v.type = 'text/javascript';
+        s.parentNode.insertBefore(v, s);
+      })(document, 'script');
+    </script>
+  </body>
+</html>
